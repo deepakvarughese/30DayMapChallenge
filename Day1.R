@@ -54,20 +54,26 @@ mlply <- read_sf(here("mallapally shp", "Mallapally.shp"))
 mlply_town <- mlply %>% 
   filter(Name == "Mallappally Town")
 
-ggplot() +
+
+map1 <- ggplot() +
   geom_sf(data = mlply) +
   geom_sf(data = mlply_town, fill = "brown", alpha = 0.5)+
   geom_sf_text(data = mlply, aes(label = Name), size = 2.5, check_overlap = TRUE)+
   theme_void() +
-  ggtitle("Mallapally Taluk") +
+  ggtitle("Mallapally Taluk", subtitle = "Mallapally is a sub-district (taluk) situated in Pathanamthitta District of the state of Kerala in India. The administrative centre of the Taluk is <b style='color:brown;'> Mallapally Town </b>. This map shows the different regions present in Mallapally Taluk.It has an estimated 130,000 residents. The river Manimala flows through the district.") +
   theme(
     panel.background = element_blank(),
-    plot.title = element_textbox_simple(margin = margin(15, 45, 15, 0),
-                                        family = "poppins", size = 45, color = "#1A242F")) +
-  
+    plot.title = element_textbox_simple(margin = margin(25, 45, 25, 185),
+                                        family = "poppins", size = 45, color = "#1A242F"),
+    plot.subtitle = element_textbox_simple(family = "poppins", size = 20, color = "#1A242F")
+    ) +
   annotation_north_arrow(location = "tr",  # add north arrow to bottom-right
                          height = unit(0.5, "cm"), # size of north arrow
                          width = unit(0.5, "cm")) +
-  annotation_scale(location = "bl")
+  annotation_scale(location = "bl")+
+  labs(caption = "Chart: Dr. Deepak Varughese, November 2023", size = 30)
 
 
+map1
+
+ggsave("map1.jpeg", device = agg_jpeg)
